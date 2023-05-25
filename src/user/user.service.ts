@@ -5,8 +5,12 @@ import { RegisterReqType } from './user.controller';
 
 @Injectable()
 export class UserService {
-  async getAll(): Promise<Array<any>> {
+  async getAll() {
     return await User.find();
+  }
+
+  async getOne({ email }) {
+    return await User.findOne({ email }).exec();
   }
 
   async register({ name, username, email, password }: RegisterReqType) {

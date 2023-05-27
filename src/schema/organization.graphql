@@ -1,0 +1,26 @@
+input UpdateUserOrganizationInput {
+  id: String!
+  userId: String!
+}
+
+input CreateOrganizationInput {
+  name: String!
+  userId: String!
+}
+
+type Organization {
+  id: String
+  name: String!
+  created: String!
+  updated: String!
+}
+
+type Query {
+  organization: [Organization!]!
+}
+
+type Mutation {
+  createOrganization(
+    createOrganizationInput: CreateOrganizationInput!
+  ): Organization!
+}

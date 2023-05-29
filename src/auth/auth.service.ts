@@ -18,7 +18,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: { email: string; password }) {
+  async login(user: { email: string; password: string }) {
     console.log(user);
 
     const userPayload = await this.validateUser(user.email, user.password);

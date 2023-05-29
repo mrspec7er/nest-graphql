@@ -1,0 +1,12 @@
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Token {
+  access_token: String!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): Token!
+}

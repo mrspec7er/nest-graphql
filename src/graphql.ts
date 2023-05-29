@@ -8,6 +8,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class LoginInput {
+    email: string;
+    password: string;
+}
+
 export class UpdateUserOrganizationInput {
     id: string;
     userId: string;
@@ -15,7 +20,6 @@ export class UpdateUserOrganizationInput {
 
 export class CreateOrganizationInput {
     name: string;
-    userId: string;
 }
 
 export class CreateUserInput {
@@ -37,6 +41,20 @@ export class UpdateUserInput {
     password: string;
 }
 
+export class Token {
+    access_token: string;
+}
+
+export abstract class IMutation {
+    abstract login(loginInput: LoginInput): Token | Promise<Token>;
+
+    abstract createOrganization(createOrganizationInput: CreateOrganizationInput): Organization | Promise<Organization>;
+
+    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
+
+    abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
+}
+
 export class Organization {
     id?: Nullable<string>;
     name: string;
@@ -49,15 +67,7 @@ export abstract class IQuery {
 
     abstract users(): User[] | Promise<User[]>;
 
-    abstract getProfileUser(getUserProfile?: Nullable<GetUserProfile>): User | Promise<User>;
-}
-
-export abstract class IMutation {
-    abstract createOrganization(createOrganizationInput: CreateOrganizationInput): Organization | Promise<Organization>;
-
-    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
-
-    abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
+    abstract getProfileUser(): User | Promise<User>;
 }
 
 export class User {

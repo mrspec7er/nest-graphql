@@ -18,7 +18,10 @@ export class OrganizationService {
   async create({
     name,
     userId,
-  }: CreateOrganizationInput): Promise<OrganizationType> {
+  }: {
+    name: string;
+    userId: string;
+  }): Promise<OrganizationType> {
     const newUser = new Organization({
       name,
     });

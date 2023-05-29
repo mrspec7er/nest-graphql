@@ -13,7 +13,7 @@ type Message {
 
 type Query {
   users: [User!]!
-  getProfileUser(getUserProfile: GetUserProfile): User!
+  getProfileUser: User!
 }
 
 type Mutation {

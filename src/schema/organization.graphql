@@ -5,7 +5,6 @@ input UpdateUserOrganizationInput {
 
 input CreateOrganizationInput {
   name: String!
-  userId: String!
 }
 
 type Organization {

@@ -24,3 +24,7 @@ type Organization {
   created: String!
   updated: String!
 }
+<<<<<<< src/schema/organization.graphql
+=======
+
+>>>>>>> src/schema/organization.graphql

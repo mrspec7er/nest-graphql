@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './user.model';
+import { User as UserModel } from './user.model';
 import * as bcrypt from 'bcrypt';
 import {
-  User as UserType,
+  User,
   CreateUserInput,
   UpdateUserOrganizationInput,
 } from '../graphql';
 
 @Injectable()
 export class UserService {
-  async getAll(): Promise<UserType[]> {
-    return await User.find();
+  async getAll() {
+    const user = await User.find();
+    return user;
   }
 
-  async getOne({ email }): Promise<UserType> {
-    return await User.findOne({ email }).exec();
+  async getOne({ email }) {
+    return await User.findOne({ email });
   }
 
   async register({
@@ -25,7 +26,7 @@ export class UserService {
     role,
   }: CreateUserInput): Promise<UserType> {
     const encryptedPassword = await bcrypt.hash(password, 11);
-    const newUser = new User({
+    const newUser = new UserModel({
       name,
       email,
       password: encryptedPassword,
@@ -33,15 +34,14 @@ export class UserService {
       role,
     });
 
-    const insertUser = await newUser.save();
-    return insertUser;
+    return await newUser.save();
   }
 
   async updateOrganization({ id, userId }: UpdateUserOrganizationInput) {
-    const userOrganizations = (await User.findById(userId))?.organizations;
+    const userOrganizations = (await UserModel.findById(userId))?.organizations;
 
     if (Array.isArray(userOrganizations)) {
-      await User.updateOne(
+      await UserModel.updateOne(
         { _id: userId },
         { $set: { organizations: [...userOrganizations, id] } },
       );

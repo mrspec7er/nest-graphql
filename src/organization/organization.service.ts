@@ -15,6 +15,7 @@ export class OrganizationService {
     return await Organization.find();
   }
 
+  
   async create({
     name,
     userId,

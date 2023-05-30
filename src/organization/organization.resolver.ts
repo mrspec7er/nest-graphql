@@ -17,16 +17,9 @@ export class OrganizationResolver {
     return this.organizationService.getAll();
   }
 
-<<<<<<< src/organization/organization.resolver.ts
   @Mutation()
   @Roles('USER')
   @UseGuards(GqlAuthGuard, RolesGuard)
-=======
-
-  @Mutation()
-  @UseGuards(GqlAuthGuard)
-
->>>>>>> src/organization/organization.resolver.ts
   createOrganization(
     @CurrentUser() user: User,
     @Args('createOrganizationInput')

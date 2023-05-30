@@ -1,21 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { User as UserModel } from './user.model';
 import * as bcrypt from 'bcrypt';
-import {
-  User,
-  CreateUserInput,
-  UpdateUserOrganizationInput,
-} from '../graphql';
+import { User, CreateUserInput, UpdateUserOrganizationInput } from '../graphql';
 
 @Injectable()
 export class UserService {
   async getAll() {
-    const user = await User.find();
+    const user = await UserModel.find();
     return user;
   }
 
   async getOne({ email }) {
-    return await User.findOne({ email });
+    return await UserModel.findOne({ email });
   }
 
   async register({
@@ -24,7 +20,7 @@ export class UserService {
     email,
     password,
     role,
-  }: CreateUserInput): Promise<UserType> {
+  }: CreateUserInput): Promise<User> {
     const encryptedPassword = await bcrypt.hash(password, 11);
     const newUser = new UserModel({
       name,

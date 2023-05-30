@@ -8,7 +8,6 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): Message!
 }
 
-
 input CreateUserInput {
   name: String!
   username: String
@@ -34,18 +33,11 @@ type User {
   name: String!
   username: String
   email: String!
-<<<<<<< src/schema/user.graphql
   role: String
-=======
->>>>>>> src/schema/user.graphql
   password: String!
   organizations: [String!]
 }
 
 type Message {
   message: String!
-<<<<<<< src/schema/user.graphql
 }
-=======
-}
->>>>>>> src/schema/user.graphql

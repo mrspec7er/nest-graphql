@@ -10,13 +10,15 @@ import { CurrentUser } from 'src/user/user.decorator';
 export class OrganizationResolver {
   constructor(private organizationService: OrganizationService) {}
 
-  @Query((returns) => [Organization])
+  @Query()
   organization(): Promise<Organization[]> {
     return this.organizationService.getAll();
   }
 
-  @Mutation((returns) => Organization)
+
+  @Mutation()
   @UseGuards(GqlAuthGuard)
+
   createOrganization(
     @CurrentUser() user: User,
     @Args('createOrganizationInput')

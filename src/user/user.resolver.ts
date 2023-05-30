@@ -9,24 +9,30 @@ import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 export class UsersResolver {
   constructor(private userService: UserService) {}
 
+<<<<<<< src/user/user.resolver.ts
   @Query((returns) => [User])
   users(
     @MessageDecorator() msg: string,
     @CurrentUser() user: User,
   ): Promise<User[]> {
+=======
+  @Query()
+  users(): Promise<User[]> {
+>>>>>>> src/user/user.resolver.ts
     return this.userService.getAll();
   }
 
-  @Mutation((returns) => User)
+  @Mutation()
   createUser(
     @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<User> {
     return this.userService.register(createUserInput);
   }
 
-  @Query((returns) => User)
+  @Query()
   @UseGuards(GqlAuthGuard)
   getProfileUser(@CurrentUser() user: User): Promise<User> {
     return this.userService.getOne({ email: user.email });
+
   }
 }

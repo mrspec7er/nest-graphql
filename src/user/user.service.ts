@@ -6,7 +6,8 @@ import { RegisterReqType } from './user.controller';
 @Injectable()
 export class UserService {
   async getAll() {
-    return await User.find();
+    const user = await User.find();
+    return user;
   }
 
   async getOne({ email }) {

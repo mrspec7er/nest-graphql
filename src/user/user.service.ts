@@ -10,7 +10,7 @@ export class UserService {
   }
 
   async getOne({ email }) {
-    return await User.findOne({ email }).exec();
+    return await User.findOne({ email });
   }
 
   async register({ name, username, email, password }: RegisterReqType) {

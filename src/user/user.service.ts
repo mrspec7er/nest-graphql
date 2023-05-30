@@ -9,12 +9,13 @@ import {
 
 @Injectable()
 export class UserService {
-  async getAll(): Promise<User[]> {
-    return await UserModel.find();
+  async getAll() {
+    const user = await User.find();
+    return user;
   }
 
-  async getOne({ email }): Promise<User> {
-    return await UserModel.findOne({ email }).exec();
+  async getOne({ email }) {
+    return await User.findOne({ email });
   }
 
   async register({

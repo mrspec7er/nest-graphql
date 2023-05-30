@@ -1,3 +1,13 @@
+type Query {
+  organization: [Organization!]!
+}
+
+type Mutation {
+  createOrganization(
+    createOrganizationInput: CreateOrganizationInput!
+  ): Organization!
+}
+
 input UpdateUserOrganizationInput {
   id: String!
   userId: String!
@@ -15,12 +25,3 @@ type Organization {
   updated: String!
 }
 
-type Query {
-  organization: [Organization!]!
-}
-
-type Mutation {
-  createOrganization(
-    createOrganizationInput: CreateOrganizationInput!
-  ): Organization!
-}

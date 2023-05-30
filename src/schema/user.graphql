@@ -1,16 +1,3 @@
-type User {
-  id: String
-  name: String!
-  username: String
-  email: String!
-  password: String!
-  organizations: [String!]
-}
-
-type Message {
-  message: String!
-}
-
 type Query {
   users: [User!]!
   getProfileUser(getUserProfile: GetUserProfile): User!
@@ -20,6 +7,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): Message!
 }
+
 
 input CreateUserInput {
   name: String!
@@ -38,4 +26,17 @@ input UpdateUserInput {
   username: String
   email: String!
   password: String!
+}
+
+type User {
+  id: String
+  name: String!
+  username: String
+  email: String!
+  password: String!
+  organizations: [String!]
+}
+
+type Message {
+  message: String!
 }

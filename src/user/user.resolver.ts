@@ -6,19 +6,19 @@ import { User, CreateUserInput, Message, GetUserProfile } from '../graphql';
 export class UsersResolver {
   constructor(private userService: UserService) {}
 
-  @Query((returns) => [User])
+  @Query()
   users(): Promise<User[]> {
     return this.userService.getAll();
   }
 
-  @Mutation((returns) => User)
+  @Mutation()
   createUser(
     @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<User> {
     return this.userService.register(createUserInput);
   }
 
-  @Query((returns) => User)
+  @Query()
   getProfileUser(
     @Args('getUserProfile') getUserProfile: GetUserProfile,
   ): Promise<User> {

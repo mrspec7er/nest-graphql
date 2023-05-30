@@ -19,18 +19,18 @@ export class OrganizationService {
     name,
     userId,
   }: CreateOrganizationInput): Promise<OrganizationType> {
-    const newUser = new Organization({
+    const newOrganization = new Organization({
       name,
     });
 
-    const insertOrg = await newUser.save();
+    const organization = await newOrganization.save();
 
-    this.userService.updateOrganization({ id: insertOrg.id, userId });
+    this.userService.updateOrganization({ id: organization.id, userId });
 
     return {
-      name: insertOrg.name,
-      created: String(insertOrg.created),
-      updated: String(insertOrg.updated),
+      name: organization.name,
+      created: String(organization.created),
+      updated: String(organization.updated),
     };
   }
 }

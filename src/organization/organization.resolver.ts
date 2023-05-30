@@ -7,12 +7,12 @@ import { Organization, CreateOrganizationInput } from '../graphql';
 export class OrganizationResolver {
   constructor(private organizationService: OrganizationService) {}
 
-  @Query((returns) => [Organization])
+  @Query()
   organization(): Promise<Organization[]> {
     return this.organizationService.getAll();
   }
 
-  @Mutation((returns) => Organization)
+  @Mutation()
   createOrganization(
     @Args('createOrganizationInput')
     createOrganizationInput: CreateOrganizationInput,

@@ -22,6 +22,7 @@ export class UserService {
     username,
     email,
     password,
+    role,
   }: CreateUserInput): Promise<UserType> {
     const encryptedPassword = await bcrypt.hash(password, 11);
     const newUser = new User({
@@ -29,6 +30,7 @@ export class UserService {
       email,
       password: encryptedPassword,
       username,
+      role,
     });
 
     const insertUser = await newUser.save();

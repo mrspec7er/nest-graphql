@@ -9,7 +9,7 @@ import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 export class UsersResolver {
   constructor(private userService: UserService) {}
 
-  @Query((returns) => [User])
+  @Query()
   users(
     @MessageDecorator() msg: string,
     @CurrentUser() user: User,
@@ -17,14 +17,14 @@ export class UsersResolver {
     return this.userService.getAll();
   }
 
-  @Mutation((returns) => User)
+  @Mutation()
   createUser(
     @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<User> {
     return this.userService.register(createUserInput);
   }
 
-  @Query((returns) => User)
+  @Query()
   @UseGuards(GqlAuthGuard)
   getProfileUser(@CurrentUser() user: User): Promise<User> {
     return this.userService.getOne({ email: user.email });

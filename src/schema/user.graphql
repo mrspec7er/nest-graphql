@@ -1,16 +1,3 @@
-type User {
-  id: String
-  name: String!
-  username: String
-  email: String!
-  password: String!
-  organizations: [String!]
-}
-
-type Message {
-  message: String!
-}
-
 type Query {
   users: [User!]!
   getProfileUser: User!
@@ -26,6 +13,7 @@ input CreateUserInput {
   username: String
   email: String!
   password: String!
+  role: String
 }
 
 input GetUserProfile {
@@ -38,4 +26,18 @@ input UpdateUserInput {
   username: String
   email: String!
   password: String!
+}
+
+type User {
+  id: String
+  name: String!
+  username: String
+  email: String!
+  role: String
+  password: String!
+  organizations: [String!]
+}
+
+type Message {
+  message: String!
 }

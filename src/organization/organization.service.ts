@@ -22,18 +22,32 @@ export class OrganizationService {
     name: string;
     userId: string;
   }): Promise<OrganizationType> {
-    const newUser = new Organization({
+    const newOrg = new Organization({
       name,
+      users: [userId],
     });
 
-    const insertOrg = await newUser.save();
+    const organization = await newOrg.save();
 
-    this.userService.updateOrganization({ id: insertOrg.id, userId });
+    this.userService.updateOrganization({ id: organization.id, userId });
 
     return {
-      name: insertOrg.name,
-      created: String(insertOrg.created),
-      updated: String(insertOrg.updated),
+      name: organization.name,
+      created: String(organization.created),
+      updated: String(organization.updated),
     };
+  }
+
+  async updateMember({ id, userId }: { id: string; userId: string }) {
+    const organizationMember = (await Organization.findById(id))?.users;
+
+    if (Array.isArray(organizationMember)) {
+      await Organization.updateOne(
+        { _id: userId },
+        { $set: { users: [...organizationMember, userId] } },
+      );
+    }
+
+    return id;
   }
 }

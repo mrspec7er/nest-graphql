@@ -1,3 +1,7 @@
+type Mutation {
+  login(loginInput: LoginInput!): Token!
+}
+
 input LoginInput {
   email: String!
   password: String!
@@ -5,8 +9,4 @@ input LoginInput {
 
 type Token {
   access_token: String!
-}
-
-type Mutation {
-  login(loginInput: LoginInput!): Token!
 }

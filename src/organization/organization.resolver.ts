@@ -1,7 +1,12 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { OrganizationService } from './organization.service';
 import { UserService } from '../user/user.service';
-import { Organization, CreateOrganizationInput, User } from '../graphql';
+import {
+  Organization,
+  CreateOrganizationInput,
+  User,
+  UpdateOrganizationInput,
+} from '../graphql';
 import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { CurrentUser } from 'src/user/user.decorator';
@@ -29,5 +34,23 @@ export class OrganizationResolver {
       name: createOrganizationInput.name,
       userId: user.id,
     });
+  }
+
+  @Mutation()
+  @Roles('USER')
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  updateOrganization(
+    @CurrentUser() user: User,
+    @Args('updateOrganizationInput')
+    updateOrganizationInput: UpdateOrganizationInput,
+  ): Promise<Organization> {
+    return this.organizationService.update(updateOrganizationInput);
+  }
+
+  @Query()
+  @Roles('USER')
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  myOrganization(@CurrentUser() user: User): Promise<Organization[]> {
+    return this.organizationService.getMyOrganizationList({ userId: user.id });
   }
 }

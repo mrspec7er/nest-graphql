@@ -32,7 +32,13 @@ input UpdateOrganizationInput {
 type Organization {
   id: String
   name: String!
-  users: [String!]
+  users: [OrganizationMember]
   created: String!
   updated: String!
+}
+
+type OrganizationMember {
+  id: String
+  invitedAt: String
+  role: String
 }

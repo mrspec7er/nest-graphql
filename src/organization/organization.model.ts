@@ -14,12 +14,12 @@ const OrganizationSchema = new mongoose.Schema({
     default: [],
   },
   created: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: new Date().toTimeString(),
   },
   updated: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: new Date().toTimeString(),
   },
 });
 

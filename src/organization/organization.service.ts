@@ -19,7 +19,7 @@ export class OrganizationService {
     name: string;
     userId: string;
   }): Promise<OrganizationType> {
-    const organizationEntry = new Organization({
+    const organization = await new Organization({
       name,
       users: [
         {
@@ -28,9 +28,7 @@ export class OrganizationService {
           invitedAt: new Date().toTimeString(),
         },
       ],
-    });
-
-    const organization = await organizationEntry.save();
+    }).save();
 
     this.userService.updateOrganization({ id: organization.id, userId });
 

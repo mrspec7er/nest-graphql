@@ -1,13 +1,19 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { User, CreateUserInput, Message, GetUserProfile } from '../graphql';
+import { User, CreateUserInput } from '../graphql';
+import { UseGuards } from '@nestjs/common';
+import { CurrentUser, MessageDecorator } from './user.decorator';
+import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 
 @Resolver()
 export class UsersResolver {
   constructor(private userService: UserService) {}
 
-  @Query()
-  users(): Promise<User[]> {
+ @Query()
+  users(
+    @MessageDecorator() msg: string,
+    @CurrentUser() user: User,
+  ): Promise<User[]> {
     return this.userService.getAll();
   }
 
@@ -19,9 +25,9 @@ export class UsersResolver {
   }
 
   @Query()
-  getProfileUser(
-    @Args('getUserProfile') getUserProfile: GetUserProfile,
-  ): Promise<User> {
-    return this.userService.getOne(getUserProfile);
+  @UseGuards(GqlAuthGuard)
+  getProfileUser(@CurrentUser() user: User): Promise<User> {
+    return this.userService.getOne({ email: user.email });
+
   }
 }

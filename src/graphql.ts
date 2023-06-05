@@ -8,6 +8,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class LoginInput {
+    email: string;
+    password: string;
+}
+
 export class UpdateUserOrganizationInput {
     id: string;
     userId: string;
@@ -15,7 +20,6 @@ export class UpdateUserOrganizationInput {
 
 export class CreateOrganizationInput {
     name: string;
-    userId: string;
 }
 
 export class CreateUserInput {
@@ -23,6 +27,7 @@ export class CreateUserInput {
     username?: Nullable<string>;
     email: string;
     password: string;
+    role?: Nullable<string>;
 }
 
 export class GetUserProfile {
@@ -37,22 +42,9 @@ export class UpdateUserInput {
     password: string;
 }
 
-export class Organization {
-    id?: Nullable<string>;
-    name: string;
-    created: string;
-    updated: string;
-}
-
-export abstract class IQuery {
-    abstract organization(): Organization[] | Promise<Organization[]>;
-
-    abstract users(): User[] | Promise<User[]>;
-
-    abstract getProfileUser(getUserProfile?: Nullable<GetUserProfile>): User | Promise<User>;
-}
-
 export abstract class IMutation {
+    abstract login(loginInput: LoginInput): Token | Promise<Token>;
+
     abstract createOrganization(createOrganizationInput: CreateOrganizationInput): Organization | Promise<Organization>;
 
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
@@ -60,11 +52,32 @@ export abstract class IMutation {
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
 }
 
+export class Token {
+    access_token: string;
+}
+
+export abstract class IQuery {
+    abstract organization(): Organization[] | Promise<Organization[]>;
+
+    abstract users(): User[] | Promise<User[]>;
+
+    abstract getProfileUser(): User | Promise<User>;
+}
+
+export class Organization {
+    id?: Nullable<string>;
+    name: string;
+    users?: Nullable<string[]>;
+    created: string;
+    updated: string;
+}
+
 export class User {
     id?: Nullable<string>;
     name: string;
     username?: Nullable<string>;
     email: string;
+    role?: Nullable<string>;
     password: string;
     organizations?: Nullable<string[]>;
 }

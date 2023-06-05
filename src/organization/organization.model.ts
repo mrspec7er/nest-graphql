@@ -5,6 +5,14 @@ const OrganizationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  users: {
+    type: Array<string>,
+    default: [],
+  },
+  projects: {
+    type: Array<string>,
+    default: [],
+  },
   created: {
     type: Date,
     default: Date.now(),

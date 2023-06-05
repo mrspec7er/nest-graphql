@@ -15,23 +15,20 @@ export class OrganizationService {
     return await Organization.find();
   }
 
+  
   async create({
     name,
     userId,
-<<<<<<< src/organization/organization.service.ts
   }: {
     name: string;
     userId: string;
   }): Promise<OrganizationType> {
-    const newUser = new Organization({
-=======
-  }: CreateOrganizationInput): Promise<OrganizationType> {
-    const newOrganization = new Organization({
->>>>>>> src/organization/organization.service.ts
+    const newOrg = new Organization({
       name,
+      users: [userId],
     });
 
-    const organization = await newOrganization.save();
+    const organization = await newOrg.save();
 
     this.userService.updateOrganization({ id: organization.id, userId });
 
@@ -40,5 +37,18 @@ export class OrganizationService {
       created: String(organization.created),
       updated: String(organization.updated),
     };
+  }
+
+  async updateMember({ id, userId }: { id: string; userId: string }) {
+    const organizationMember = (await Organization.findById(id))?.users;
+
+    if (Array.isArray(organizationMember)) {
+      await Organization.updateOne(
+        { _id: userId },
+        { $set: { users: [...organizationMember, userId] } },
+      );
+    }
+
+    return id;
   }
 }

@@ -6,7 +6,7 @@ import { Token, LoginInput } from '../graphql';
 export class UsersResolver {
   constructor(private authService: AuthService) {}
 
-  @Mutation((returns) => Token)
+  @Mutation()
   login(@Args('loginInput') loginInput: LoginInput): Promise<Token> {
     return this.authService.login(loginInput);
   }

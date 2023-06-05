@@ -27,6 +27,7 @@ export class CreateUserInput {
     username?: Nullable<string>;
     email: string;
     password: string;
+    role?: Nullable<string>;
 }
 
 export class GetUserProfile {
@@ -41,10 +42,6 @@ export class UpdateUserInput {
     password: string;
 }
 
-export class Token {
-    access_token: string;
-}
-
 export abstract class IMutation {
     abstract login(loginInput: LoginInput): Token | Promise<Token>;
 
@@ -55,11 +52,8 @@ export abstract class IMutation {
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
 }
 
-export class Organization {
-    id?: Nullable<string>;
-    name: string;
-    created: string;
-    updated: string;
+export class Token {
+    access_token: string;
 }
 
 export abstract class IQuery {
@@ -70,11 +64,20 @@ export abstract class IQuery {
     abstract getProfileUser(): User | Promise<User>;
 }
 
+export class Organization {
+    id?: Nullable<string>;
+    name: string;
+    users?: Nullable<string[]>;
+    created: string;
+    updated: string;
+}
+
 export class User {
     id?: Nullable<string>;
     name: string;
     username?: Nullable<string>;
     email: string;
+    role?: Nullable<string>;
     password: string;
     organizations?: Nullable<string[]>;
 }

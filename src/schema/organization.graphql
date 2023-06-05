@@ -20,7 +20,7 @@ input CreateOrganizationInput {
 type Organization {
   id: String
   name: String!
+  users: [String!]
   created: String!
   updated: String!
 }
-

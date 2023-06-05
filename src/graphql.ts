@@ -22,6 +22,11 @@ export class CreateOrganizationInput {
     name: string;
 }
 
+export class UpdateOrganizationInput {
+    name: string;
+    id: string;
+}
+
 export class CreateUserInput {
     name: string;
     username?: Nullable<string>;
@@ -47,6 +52,8 @@ export abstract class IMutation {
 
     abstract createOrganization(createOrganizationInput: CreateOrganizationInput): Organization | Promise<Organization>;
 
+    abstract updateOrganization(updateOrganizationInput: UpdateOrganizationInput): Organization | Promise<Organization>;
+
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
@@ -58,6 +65,8 @@ export class Token {
 
 export abstract class IQuery {
     abstract organization(): Organization[] | Promise<Organization[]>;
+
+    abstract myOrganization(): Organization[] | Promise<Organization[]>;
 
     abstract users(): User[] | Promise<User[]>;
 

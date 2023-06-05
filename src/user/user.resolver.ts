@@ -9,11 +9,7 @@ import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 export class UsersResolver {
   constructor(private userService: UserService) {}
 
-<<<<<<< src/user/user.resolver.ts
   @Query()
-=======
- @Query()
->>>>>>> src/user/user.resolver.ts
   users(
     @MessageDecorator() msg: string,
     @CurrentUser() user: User,

@@ -23,8 +23,9 @@ export class OrganizationResolver {
   }
 
   @Mutation()
-  @Roles('USER')
-  @UseGuards(GqlAuthGuard, RolesGuard)
+  // @Roles('USER')
+  // @UseGuards(GqlAuthGuard, RolesGuard)
+  @UseGuards(GqlAuthGuard)
   createOrganization(
     @CurrentUser() user: User,
     @Args('createOrganizationInput')
@@ -33,12 +34,12 @@ export class OrganizationResolver {
     return this.organizationService.create({
       name: createOrganizationInput.name,
       userId: user.id,
+      role: 'OWNER',
     });
   }
 
   @Mutation()
-  @Roles('USER')
-  @UseGuards(GqlAuthGuard, RolesGuard)
+  @UseGuards(GqlAuthGuard)
   updateOrganization(
     @CurrentUser() user: User,
     @Args('updateOrganizationInput')
@@ -48,8 +49,7 @@ export class OrganizationResolver {
   }
 
   @Query()
-  @Roles('USER')
-  @UseGuards(GqlAuthGuard, RolesGuard)
+  @UseGuards(GqlAuthGuard)
   myOrganization(@CurrentUser() user: User): Promise<Organization[]> {
     return this.organizationService.getMyOrganizationList({ userId: user.id });
   }

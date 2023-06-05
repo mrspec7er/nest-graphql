@@ -6,7 +6,7 @@ const OrganizationSchema = new mongoose.Schema({
     required: true,
   },
   users: {
-    type: Array<string>,
+    type: Array<{ id: String; role: String; invitedAt: String }>,
     default: [],
   },
   projects: {

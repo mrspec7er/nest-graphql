@@ -32,7 +32,6 @@ export class CreateUserInput {
     username?: Nullable<string>;
     email: string;
     password: string;
-    role?: Nullable<string>;
 }
 
 export class GetUserProfile {
@@ -76,9 +75,15 @@ export abstract class IQuery {
 export class Organization {
     id?: Nullable<string>;
     name: string;
-    users?: Nullable<string[]>;
+    users?: Nullable<Nullable<OrganizationMember>[]>;
     created: string;
     updated: string;
+}
+
+export class OrganizationMember {
+    id?: Nullable<string>;
+    invitedAt?: Nullable<string>;
+    role?: Nullable<string>;
 }
 
 export class User {
@@ -86,7 +91,6 @@ export class User {
     name: string;
     username?: Nullable<string>;
     email: string;
-    role?: Nullable<string>;
     password: string;
     organizations?: Nullable<string[]>;
 }

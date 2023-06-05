@@ -9,16 +9,11 @@ import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 export class UsersResolver {
   constructor(private userService: UserService) {}
 
-<<<<<<< src/user/user.resolver.ts
-  @Query((returns) => [User])
+ @Query()
   users(
     @MessageDecorator() msg: string,
     @CurrentUser() user: User,
   ): Promise<User[]> {
-=======
-  @Query()
-  users(): Promise<User[]> {
->>>>>>> src/user/user.resolver.ts
     return this.userService.getAll();
   }
 

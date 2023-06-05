@@ -8,12 +8,12 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): Message!
 }
 
-
 input CreateUserInput {
   name: String!
   username: String
   email: String!
   password: String!
+  role: String
 }
 
 input GetUserProfile {
@@ -33,6 +33,7 @@ type User {
   name: String!
   username: String
   email: String!
+  role: String
   password: String!
   organizations: [String!]
 }

@@ -13,7 +13,7 @@ import { UsersResolver } from './auth.resolver';
     PassportModule,
     JwtModule.register({
       secret: 'JWT_SECRET',
-      signOptions: { expiresIn: '3200s' },
+      signOptions: { expiresIn: '320000s' },
     }),
   ],
   providers: [AuthService, JwtStrategy, UsersResolver],

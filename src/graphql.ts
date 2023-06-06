@@ -14,7 +14,7 @@ export class LoginInput {
 }
 
 export class UpdateUserOrganizationInput {
-    id: string;
+    organizationId: string;
     userId: string;
 }
 
@@ -25,6 +25,21 @@ export class CreateOrganizationInput {
 export class UpdateOrganizationInput {
     name: string;
     id: string;
+}
+
+export class CreateProjectInput {
+    organizationId: string;
+    name: string;
+    description?: Nullable<string>;
+}
+
+export class ProjectByIdInput {
+    id?: Nullable<string>;
+}
+
+export class UpdateUserProjectInput {
+    projectId: string;
+    userId: string;
 }
 
 export class CreateUserInput {
@@ -53,6 +68,8 @@ export abstract class IMutation {
 
     abstract updateOrganization(updateOrganizationInput: UpdateOrganizationInput): Organization | Promise<Organization>;
 
+    abstract createProject(createProjectInput: CreateProjectInput): Project | Promise<Project>;
+
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
@@ -67,6 +84,12 @@ export abstract class IQuery {
 
     abstract myOrganization(): Organization[] | Promise<Organization[]>;
 
+    abstract project(): Project[] | Promise<Project[]>;
+
+    abstract myProject(): Project[] | Promise<Project[]>;
+
+    abstract projectById(projectByIdInput: ProjectByIdInput): Project | Promise<Project>;
+
     abstract users(): User[] | Promise<User[]>;
 
     abstract getProfileUser(): User | Promise<User>;
@@ -76,11 +99,29 @@ export class Organization {
     id?: Nullable<string>;
     name: string;
     users?: Nullable<Nullable<OrganizationMember>[]>;
+    projects?: Nullable<string[]>;
     created: string;
     updated: string;
 }
 
 export class OrganizationMember {
+    id?: Nullable<string>;
+    invitedAt?: Nullable<string>;
+    role?: Nullable<string>;
+}
+
+export class Project {
+    id?: Nullable<string>;
+    organizationId: string;
+    name: string;
+    description?: Nullable<string>;
+    users?: Nullable<Nullable<ProjectMember>[]>;
+    createdBy: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export class ProjectMember {
     id?: Nullable<string>;
     invitedAt?: Nullable<string>;
     role?: Nullable<string>;
@@ -93,6 +134,7 @@ export class User {
     email: string;
     password: string;
     organizations?: Nullable<string[]>;
+    projects?: Nullable<string[]>;
 }
 
 export class Message {

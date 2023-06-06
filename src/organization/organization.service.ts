@@ -30,7 +30,10 @@ export class OrganizationService {
       ],
     }).save();
 
-    this.userService.updateOrganization({ id: organization.id, userId });
+    this.userService.updateOrganization({
+      organizationId: organization.id,
+      userId,
+    });
 
     return organization;
   }
@@ -62,16 +65,35 @@ export class OrganizationService {
     return organization;
   }
 
-  async updateMember({ id, userId }: { id: string; userId: string }) {
-    const organizationMember = (await Organization.findById(id))?.users;
+  // async updateMember({ id, userId }: { id: string; userId: string }) {
+  //   const organizationMember = (await Organization.findById(id))?.users;
 
-    if (Array.isArray(organizationMember)) {
+  //   if (Array.isArray(organizationMember)) {
+  //     await Organization.updateOne(
+  //       { _id: id },
+  //       { $set: { users: [...organizationMember, userId] } },
+  //     );
+  //   }
+
+  //   return id;
+  // }
+
+  async updateProject({
+    organizationId,
+    projectId,
+  }: {
+    organizationId: string;
+    projectId: string;
+  }) {
+    const projectList = (await Organization.findById(organizationId))?.projects;
+
+    if (Array.isArray(projectList)) {
       await Organization.updateOne(
-        { _id: userId },
-        { $set: { users: [...organizationMember, userId] } },
+        { _id: organizationId },
+        { $set: { projects: [...projectList, projectId] } },
       );
     }
 
-    return id;
+    return organizationId;
   }
 }

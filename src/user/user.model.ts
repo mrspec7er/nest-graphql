@@ -18,12 +18,12 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   created: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: new Date().toTimeString(),
   },
   updated: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: new Date().toTimeString(),
   },
   role: {
     type: String,

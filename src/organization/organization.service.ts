@@ -15,30 +15,24 @@ export class OrganizationService {
   async create({
     name,
     userId,
-    role,
   }: {
     name: string;
     userId: string;
-    role: 'OWNER' | 'MANAGER' | 'MEMBER';
   }): Promise<OrganizationType> {
-    const newOrg = new Organization({
+    const organization = await new Organization({
       name,
       users: [
         {
           id: userId,
-          role,
-          invitedAt: String(Date.now()),
+          role: 'OWNER',
+          invitedAt: new Date().toTimeString(),
         },
       ],
-    });
-
-    const organization = await newOrg.save();
+    }).save();
 
     this.userService.updateOrganization({ id: organization.id, userId });
 
-    let typeParser: any = organization;
-
-    return typeParser;
+    return organization;
   }
 
   async update({
@@ -50,12 +44,10 @@ export class OrganizationService {
   }): Promise<OrganizationType> {
     const organization = await Organization.findOneAndUpdate(
       { _id: id },
-      { name, updated: Date.now() },
+      { name, updated: new Date().toTimeString() },
     );
 
-    let typeParser: any = organization;
-
-    return typeParser;
+    return organization;
   }
 
   async getMyOrganizationList({
@@ -67,9 +59,7 @@ export class OrganizationService {
       users: { $elemMatch: { id: userId } },
     });
 
-    let typeParser: any = organization;
-
-    return typeParser;
+    return organization;
   }
 
   async updateMember({ id, userId }: { id: string; userId: string }) {

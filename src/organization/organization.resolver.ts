@@ -34,7 +34,6 @@ export class OrganizationResolver {
     return this.organizationService.create({
       name: createOrganizationInput.name,
       userId: user.id,
-      role: 'OWNER',
     });
   }
 

@@ -4,6 +4,13 @@ import { Project as ProjectType } from '../graphql';
 import { UserService } from '../user/user.service';
 import { OrganizationService } from '../organization/organization.service';
 
+interface CreateProjectType {
+  name: string;
+  userId: string;
+  organizationId: string;
+  description?: string;
+}
+
 @Injectable()
 export class ProjectService {
   constructor(
@@ -16,7 +23,7 @@ export class ProjectService {
     return await Project.find();
   }
 
-  async getOne({ id }): Promise<ProjectType> {
+  async getOne(id: string): Promise<ProjectType> {
     const project = await Project.findById(id);
 
     return project;
@@ -27,12 +34,7 @@ export class ProjectService {
     userId,
     description,
     organizationId,
-  }: {
-    name: string;
-    userId: string;
-    organizationId: string;
-    description: string;
-  }): Promise<ProjectType> {
+  }: CreateProjectType): Promise<ProjectType> {
     const project = await new Project({
       name,
       organizationId,

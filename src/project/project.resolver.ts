@@ -22,9 +22,9 @@ export class ProjectResolver {
   @Query()
   projectById(
     @Args('projectByIdInput')
-    projectByIdInput: ProjectByIdInput,
+    id: string,
   ): Promise<Project> {
-    return this.projectService.getOne({ id: projectByIdInput.id });
+    return this.projectService.getOne(id);
   }
 
   @Mutation()
@@ -35,10 +35,8 @@ export class ProjectResolver {
     createProjectInput: CreateProjectInput,
   ): Promise<Project> {
     return this.projectService.create({
-      name: createProjectInput.name,
+      ...createProjectInput,
       userId: user.id,
-      description: createProjectInput.description,
-      organizationId: createProjectInput.organizationId,
     });
   }
 

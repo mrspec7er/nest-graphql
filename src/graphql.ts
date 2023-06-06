@@ -96,7 +96,9 @@ export abstract class IQuery {
 
     abstract myProject(): Project[] | Promise<Project[]>;
 
-    abstract projectById(projectByIdInput: ProjectByIdInput): Project | Promise<Project>;
+    abstract projectById(id: string): Project | Promise<Project>;
+
+    abstract projectByOrganization(organizationId: string): Project[] | Promise<Project[]>;
 
     abstract users(): User[] | Promise<User[]>;
 

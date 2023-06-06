@@ -22,10 +22,18 @@ export class ProjectResolver {
 
   @Query()
   projectById(
-    @Args('projectByIdInput')
-    id: string,
+    @Args('id')
+    id,
   ): Promise<Project> {
     return this.projectService.getOne(id);
+  }
+
+  @Query()
+  projectByOrganization(
+    @Args('organizationId') organizationId,
+  ): Promise<Project[]> {
+    const data = this.projectService.getByOrganization(organizationId);
+    return data;
   }
 
   @Mutation()
@@ -57,6 +65,6 @@ export class ProjectResolver {
   @Query()
   @UseGuards(GqlAuthGuard)
   myProject(@CurrentUser() user: User): Promise<Project[]> {
-    return this.projectService.getMyProject({ userId: user.id });
+    return this.projectService.getMyProject(user.id);
   }
 }

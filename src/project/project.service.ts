@@ -4,7 +4,6 @@ import { Project as ProjectType } from '../graphql';
 import { UserService } from '../user/user.service';
 import { OrganizationService } from '../organization/organization.service';
 
-
 interface UpdateProjectInputType {
   name: string;
   userId: string;
@@ -29,6 +28,10 @@ export class ProjectService {
 
   async getAll(): Promise<ProjectType[]> {
     return await Project.find();
+  }
+
+  async getByOrganization(organizationId: string): Promise<ProjectType[]> {
+    return await Project.find({ organizationId });
   }
 
   async getOne(id: string): Promise<ProjectType> {
@@ -85,14 +88,13 @@ export class ProjectService {
     return project;
   }
 
-  async getMyProject({ userId }: { userId: string }): Promise<ProjectType[]> {
+  async getMyProject(userId: string): Promise<ProjectType[]> {
     const project = await Project.find({
       users: { $elemMatch: { id: userId } },
     });
 
     return project;
   }
-
   //   async updateMember({ id, userId }: { id: string; userId: string }) {
   //     const projectMember = (await Project.findById(id))?.users;
 

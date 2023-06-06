@@ -4,6 +4,14 @@ import { Project as ProjectType } from '../graphql';
 import { UserService } from '../user/user.service';
 import { OrganizationService } from '../organization/organization.service';
 
+
+interface UpdateProjectInputType {
+  name: string;
+  userId: string;
+  projectId: string;
+  description?: string;
+}
+
 interface CreateProjectType {
   name: string;
   userId: string;
@@ -54,6 +62,25 @@ export class ProjectService {
       organizationId,
     });
     await this.userService.updateProject({ projectId: project.id, userId });
+
+    return project;
+  }
+
+  async update({
+    name,
+    userId,
+    description,
+    projectId,
+  }: UpdateProjectInputType): Promise<ProjectType> {
+    const project = await Project.findOne({ _id: projectId });
+
+    const projectOwner = project.users.find((i) => i.id === userId);
+
+    if (!projectOwner || projectOwner.role !== 'OWNER') {
+      throw new Error('Unauthorize user');
+    }
+
+    await Project.updateOne({ _id: projectId }, { name, description });
 
     return project;
   }

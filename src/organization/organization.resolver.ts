@@ -1,6 +1,5 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { OrganizationService } from './organization.service';
-import { UserService } from '../user/user.service';
 import {
   Organization,
   CreateOrganizationInput,

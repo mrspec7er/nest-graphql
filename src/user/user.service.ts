@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { User as UserModel } from './user.model';
 import * as bcrypt from 'bcrypt';
-import { User, CreateUserInput, UpdateUserOrganizationInput } from '../graphql';
+import {
+  User,
+  CreateUserInput,
+  UpdateUserOrganizationInput,
+  UpdateUserProjectInput,
+} from '../graphql';
 
 @Injectable()
 export class UserService {
@@ -31,16 +36,32 @@ export class UserService {
     return await newUser.save();
   }
 
-  async updateOrganization({ id, userId }: UpdateUserOrganizationInput) {
+  async updateOrganization({
+    organizationId,
+    userId,
+  }: UpdateUserOrganizationInput) {
     const userOrganizations = (await UserModel.findById(userId))?.organizations;
 
     if (Array.isArray(userOrganizations)) {
       await UserModel.updateOne(
         { _id: userId },
-        { $set: { organizations: [...userOrganizations, id] } },
+        { $set: { organizations: [...userOrganizations, organizationId] } },
       );
     }
 
-    return id;
+    return organizationId;
+  }
+
+  async updateProject({ projectId, userId }: UpdateUserProjectInput) {
+    const userProject = (await UserModel.findById(userId))?.projects;
+
+    if (Array.isArray(userProject)) {
+      await UserModel.updateOne(
+        { _id: userId },
+        { $set: { projects: [...userProject, projectId] } },
+      );
+    }
+
+    return projectId;
   }
 }

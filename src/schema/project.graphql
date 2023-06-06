@@ -1,0 +1,43 @@
+type Query {
+  project: [Project!]!
+  myProject: [Project!]!
+  projectById(projectByIdInput: ProjectByIdInput!): Project!
+}
+
+type Mutation {
+  createProject(createProjectInput: CreateProjectInput!): Project!
+}
+
+input CreateProjectInput {
+  organizationId: String!
+  name: String!
+  description: String
+}
+
+input ProjectByIdInput {
+  id: String
+}
+
+input UpdateUserProjectInput {
+  projectId: String!
+  userId: String!
+}
+
+type Project {
+  id: String
+  organizationId: String!
+  name: String!
+  description: String
+  users: [ProjectMember]
+  createdBy: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type ProjectMember {
+  id: String
+  invitedAt: String
+  role: String
+}
+
+scalar Date

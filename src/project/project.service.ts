@@ -56,6 +56,30 @@ export class ProjectService {
     return project;
   }
 
+  async update({
+    name,
+    userId,
+    description,
+    projectId,
+  }: {
+    name: string;
+    userId: string;
+    projectId: string;
+    description: string;
+  }): Promise<ProjectType> {
+    const project = await Project.findOne({ _id: projectId });
+
+    const projectOwner = project.users.find((i) => i.id === userId);
+
+    if (!projectOwner || projectOwner.role !== 'OWNER') {
+      throw new Error('Unauthorize user');
+    }
+
+    await Project.updateOne({ _id: projectId }, { name, description });
+
+    return project;
+  }
+
   async getMyProject({ userId }: { userId: string }): Promise<ProjectType[]> {
     const project = await Project.find({
       users: { $elemMatch: { id: userId } },

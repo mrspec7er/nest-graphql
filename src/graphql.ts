@@ -33,6 +33,12 @@ export class CreateProjectInput {
     description?: Nullable<string>;
 }
 
+export class UpdateProjectInput {
+    name: string;
+    projectId: string;
+    description?: Nullable<string>;
+}
+
 export class ProjectByIdInput {
     id?: Nullable<string>;
 }
@@ -69,6 +75,8 @@ export abstract class IMutation {
     abstract updateOrganization(updateOrganizationInput: UpdateOrganizationInput): Organization | Promise<Organization>;
 
     abstract createProject(createProjectInput: CreateProjectInput): Project | Promise<Project>;
+
+    abstract updateProject(updateProjectInput: UpdateProjectInput): Project | Promise<Project>;
 
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 

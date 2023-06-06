@@ -4,6 +4,7 @@ import {
   User,
   Project,
   CreateProjectInput,
+  UpdateProjectInput,
   ProjectByIdInput,
 } from '../graphql';
 import { GqlAuthGuard } from '../auth/graphql-auth.guard';
@@ -39,6 +40,21 @@ export class ProjectResolver {
       userId: user.id,
       description: createProjectInput.description,
       organizationId: createProjectInput.organizationId,
+    });
+  }
+
+  @Mutation()
+  @UseGuards(GqlAuthGuard)
+  updateProject(
+    @CurrentUser() user: User,
+    @Args('updateProjectInput')
+    updateProjectInput: UpdateProjectInput,
+  ): Promise<Project> {
+    return this.projectService.update({
+      name: updateProjectInput.name,
+      userId: user.id,
+      description: updateProjectInput.description,
+      projectId: updateProjectInput.projectId,
     });
   }
 

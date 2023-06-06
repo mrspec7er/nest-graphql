@@ -4,6 +4,13 @@ import { Project as ProjectType } from '../graphql';
 import { UserService } from '../user/user.service';
 import { OrganizationService } from '../organization/organization.service';
 
+interface UpdateProjectInputType {
+  name: string;
+  userId: string;
+  projectId: string;
+  description?: string;
+}
+
 @Injectable()
 export class ProjectService {
   constructor(
@@ -61,12 +68,7 @@ export class ProjectService {
     userId,
     description,
     projectId,
-  }: {
-    name: string;
-    userId: string;
-    projectId: string;
-    description: string;
-  }): Promise<ProjectType> {
+  }: UpdateProjectInputType): Promise<ProjectType> {
     const project = await Project.findOne({ _id: projectId });
 
     const projectOwner = project.users.find((i) => i.id === userId);

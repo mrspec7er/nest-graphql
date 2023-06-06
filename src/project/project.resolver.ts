@@ -51,10 +51,8 @@ export class ProjectResolver {
     updateProjectInput: UpdateProjectInput,
   ): Promise<Project> {
     return this.projectService.update({
-      name: updateProjectInput.name,
       userId: user.id,
-      description: updateProjectInput.description,
-      projectId: updateProjectInput.projectId,
+      ...updateProjectInput,
     });
   }
 

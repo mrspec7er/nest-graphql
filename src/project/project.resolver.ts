@@ -16,11 +16,6 @@ export class ProjectResolver {
   constructor(private projectService: ProjectService) {}
 
   @Query()
-  project(): Promise<Project[]> {
-    return this.projectService.getAll();
-  }
-
-  @Query()
   projectById(
     @Args('id')
     id,
@@ -29,9 +24,7 @@ export class ProjectResolver {
   }
 
   @Query()
-  projectByOrganization(
-    @Args('organizationId') organizationId,
-  ): Promise<Project[]> {
+  projects(@Args('organizationId') organizationId): Promise<Project[]> {
     const data = this.projectService.getByOrganization(organizationId);
     return data;
   }

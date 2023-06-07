@@ -1,0 +1,58 @@
+type Query {
+  venues: [Vendor!]!
+  foods: [Vendor!]!
+  equipments: [Vendor!]!
+}
+
+type Mutation {
+  createVenue(createVenueInput: CreateVenueInput!): Vendor!
+  createFood(createFoodInput: CreateFoodInput!): Vendor!
+  createEquipment(createEquipmentInput: CreateEquipmentInput!): Vendor!
+}
+
+input CreateVenueInput {
+  name: String!
+  address: String!
+  phone: String!
+  isActive: Boolean!
+  venueAddress: String!
+  venuePhone: String!
+  venueCoordinator: String!
+}
+
+input CreateEquipmentInput {
+  name: String!
+  address: String!
+  phone: String!
+  isActive: Boolean!
+  equipments: [String!]
+}
+input CreateFoodInput {
+  name: String!
+  address: String!
+  phone: String!
+  isActive: Boolean!
+  menu: [String!]
+}
+
+type Vendor {
+  id: String
+  name: String!
+  address: String
+  phone: String!
+  isActive: Boolean!
+}
+
+extend type Vendor {
+  venueAddress: String!
+  venuePhone: String!
+  venueCoordinator: String!
+}
+
+extend type Vendor {
+  equipments: [String!]
+}
+
+extend type Vendor {
+  menu: [String!]
+}

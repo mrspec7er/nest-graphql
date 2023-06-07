@@ -67,6 +67,32 @@ export class UpdateUserInput {
     password: string;
 }
 
+export class CreateVenueInput {
+    name: string;
+    address: string;
+    phone: string;
+    isActive: boolean;
+    venueAddress: string;
+    venuePhone: string;
+    venueCoordinator: string;
+}
+
+export class CreateEquipmentInput {
+    name: string;
+    address: string;
+    phone: string;
+    isActive: boolean;
+    equipments?: Nullable<string[]>;
+}
+
+export class CreateFoodInput {
+    name: string;
+    address: string;
+    phone: string;
+    isActive: boolean;
+    menu?: Nullable<string[]>;
+}
+
 export abstract class IMutation {
     abstract login(loginInput: LoginInput): Token | Promise<Token>;
 
@@ -81,6 +107,12 @@ export abstract class IMutation {
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
+
+    abstract createVenue(createVenueInput: CreateVenueInput): Vendor | Promise<Vendor>;
+
+    abstract createFood(createFoodInput: CreateFoodInput): Vendor | Promise<Vendor>;
+
+    abstract createEquipment(createEquipmentInput: CreateEquipmentInput): Vendor | Promise<Vendor>;
 }
 
 export class Token {
@@ -103,6 +135,12 @@ export abstract class IQuery {
     abstract users(): User[] | Promise<User[]>;
 
     abstract getProfileUser(): User | Promise<User>;
+
+    abstract venues(): Vendor[] | Promise<Vendor[]>;
+
+    abstract foods(): Vendor[] | Promise<Vendor[]>;
+
+    abstract equipments(): Vendor[] | Promise<Vendor[]>;
 }
 
 export class Organization {
@@ -110,8 +148,8 @@ export class Organization {
     name: string;
     users?: Nullable<Nullable<OrganizationMember>[]>;
     projects?: Nullable<string[]>;
-    created: string;
-    updated: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export class OrganizationMember {
@@ -149,6 +187,19 @@ export class User {
 
 export class Message {
     message: string;
+}
+
+export class Vendor {
+    id?: Nullable<string>;
+    name: string;
+    address?: Nullable<string>;
+    phone: string;
+    isActive: boolean;
+    venueAddress: string;
+    venuePhone: string;
+    venueCoordinator: string;
+    equipments?: Nullable<string[]>;
+    menu?: Nullable<string[]>;
 }
 
 type Nullable<T> = T | null;

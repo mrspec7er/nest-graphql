@@ -3,9 +3,12 @@ import { VendorService } from './vendor.service';
 import {
   CreateVenueInput,
   User,
-  Vendor,
   CreateEquipmentInput,
   CreateFoodInput,
+  VendorEquipment,
+  VendorFood,
+  VendorVenue,
+  Vendor,
 } from '../graphql';
 import { GqlAuthGuard } from '../auth/graphql-auth.guard';
 import { UseGuards } from '@nestjs/common';
@@ -16,9 +19,13 @@ import { RolesGuard } from '../auth/roles.guard';
 @Resolver()
 export class VendorResolver {
   constructor(private vendorService: VendorService) {}
+  @Query()
+  vendors(): Promise<Vendor[]> {
+    return this.vendorService.getVendor();
+  }
 
   @Query()
-  venues(): Promise<Vendor[]> {
+  venues(): Promise<VendorVenue[]> {
     return this.vendorService.getVenue();
   }
 
@@ -37,7 +44,7 @@ export class VendorResolver {
   }
 
   @Query()
-  equipments(): Promise<Vendor[]> {
+  equipments(): Promise<VendorEquipment[]> {
     return this.vendorService.getEquipment();
   }
 
@@ -54,7 +61,7 @@ export class VendorResolver {
   }
 
   @Query()
-  foods(): Promise<Vendor[]> {
+  foods(): Promise<VendorFood[]> {
     return this.vendorService.getFood();
   }
 

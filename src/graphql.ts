@@ -8,6 +8,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum VendorEntities {
+    VendorVenue = "VendorVenue",
+    VendorEquipment = "VendorEquipment",
+    VendorFood = "VendorFood"
+}
+
 export class LoginInput {
     email: string;
     password: string;
@@ -108,11 +114,11 @@ export abstract class IMutation {
 
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
 
-    abstract createVenue(createVenueInput: CreateVenueInput): Vendor | Promise<Vendor>;
+    abstract createVenue(createVenueInput: CreateVenueInput): VendorVenue | Promise<VendorVenue>;
 
-    abstract createFood(createFoodInput: CreateFoodInput): Vendor | Promise<Vendor>;
+    abstract createFood(createFoodInput: CreateFoodInput): VendorFood | Promise<VendorFood>;
 
-    abstract createEquipment(createEquipmentInput: CreateEquipmentInput): Vendor | Promise<Vendor>;
+    abstract createEquipment(createEquipmentInput: CreateEquipmentInput): VendorEquipment | Promise<VendorEquipment>;
 }
 
 export class Token {
@@ -136,11 +142,13 @@ export abstract class IQuery {
 
     abstract getProfileUser(): User | Promise<User>;
 
-    abstract venues(): Vendor[] | Promise<Vendor[]>;
+    abstract venues(): VendorVenue[] | Promise<VendorVenue[]>;
 
-    abstract foods(): Vendor[] | Promise<Vendor[]>;
+    abstract foods(): VendorFood[] | Promise<VendorFood[]>;
 
-    abstract equipments(): Vendor[] | Promise<Vendor[]>;
+    abstract equipments(): VendorEquipment[] | Promise<VendorEquipment[]>;
+
+    abstract vendors(): Vendor[] | Promise<Vendor[]>;
 }
 
 export class Organization {
@@ -189,7 +197,7 @@ export class Message {
     message: string;
 }
 
-export class Vendor {
+export class VendorVenue {
     id?: Nullable<string>;
     name: string;
     address?: Nullable<string>;
@@ -198,8 +206,25 @@ export class Vendor {
     venueAddress: string;
     venuePhone: string;
     venueCoordinator: string;
+}
+
+export class VendorEquipment {
+    id?: Nullable<string>;
+    name: string;
+    address?: Nullable<string>;
+    phone: string;
+    isActive: boolean;
     equipments?: Nullable<string[]>;
+}
+
+export class VendorFood {
+    id?: Nullable<string>;
+    name: string;
+    address?: Nullable<string>;
+    phone: string;
+    isActive: boolean;
     menu?: Nullable<string[]>;
 }
 
+export type Vendor = VendorEquipment | VendorFood | VendorVenue;
 type Nullable<T> = T | null;

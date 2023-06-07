@@ -1,15 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { Venue, Equipment, Food } from './vendor.model';
+import { Venue, Equipment, Food, Vendor } from './vendor.model';
 import {
-  Vendor as VendorType,
+  VendorVenue,
+  VendorEquipment,
+  VendorFood,
   CreateVenueInput,
   CreateEquipmentInput,
   CreateFoodInput,
+  Vendor as VendorType,
 } from '../graphql';
 
 @Injectable()
 export class VendorService {
-  async getVenue(): Promise<VendorType[]> {
+  async getVendor(): Promise<VendorType[]> {
+    return await Vendor.find();
+  }
+
+  async getVenue(): Promise<VendorVenue[]> {
     return await Venue.find();
   }
 
@@ -35,7 +42,7 @@ export class VendorService {
     return venueVendor;
   }
 
-  async getEquipment(): Promise<VendorType[]> {
+  async getEquipment(): Promise<VendorEquipment[]> {
     return await Equipment.find();
   }
 
@@ -57,7 +64,7 @@ export class VendorService {
     return equipmentsVendor;
   }
 
-  async getFood(): Promise<VendorType[]> {
+  async getFood(): Promise<VendorFood[]> {
     return await Food.find();
   }
 

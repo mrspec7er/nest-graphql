@@ -56,4 +56,4 @@ const Equipment = Vendor.discriminator('Equipment', EquipmentSchema);
 
 const Food = Vendor.discriminator('Food', FoodSchema);
 
-export { Venue, Equipment, Food };
+export { Venue, Equipment, Food, Vendor };

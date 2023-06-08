@@ -1,7 +1,7 @@
 type Query {
-  project: [Project!]!
   myProject: [Project!]!
-  projectById(projectByIdInput: ProjectByIdInput!): Project!
+  projectById(id: String!): Project!
+  projects(organizationId: String!): [Project!]!
 }
 
 type Mutation {

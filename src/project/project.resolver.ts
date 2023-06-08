@@ -16,16 +16,17 @@ export class ProjectResolver {
   constructor(private projectService: ProjectService) {}
 
   @Query()
-  project(): Promise<Project[]> {
-    return this.projectService.getAll();
+  projectById(
+    @Args('id')
+    id,
+  ): Promise<Project> {
+    return this.projectService.getOne(id);
   }
 
   @Query()
-  projectById(
-    @Args('projectByIdInput')
-    id: string,
-  ): Promise<Project> {
-    return this.projectService.getOne(id);
+  projects(@Args('organizationId') organizationId): Promise<Project[]> {
+    const data = this.projectService.getByOrganization(organizationId);
+    return data;
   }
 
   @Mutation()
@@ -57,6 +58,6 @@ export class ProjectResolver {
   @Query()
   @UseGuards(GqlAuthGuard)
   myProject(@CurrentUser() user: User): Promise<Project[]> {
-    return this.projectService.getMyProject({ userId: user.id });
+    return this.projectService.getMyProject(user.id);
   }
 }

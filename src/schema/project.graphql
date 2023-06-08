@@ -30,6 +30,12 @@ input UpdateUserProjectInput {
   userId: String!
 }
 
+enum ProjectEvent {
+  ProjectCreated
+  ProjectDeleted
+  ProjectMemberUpdated
+}
+
 type Project {
   id: String
   organizationId: String!

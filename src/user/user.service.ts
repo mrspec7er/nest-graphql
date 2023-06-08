@@ -7,6 +7,9 @@ import {
   UpdateUserOrganizationInput,
   UpdateUserProjectInput,
 } from '../graphql';
+import { OnEvent } from '@nestjs/event-emitter';
+import { OrganizationEvent } from '../graphql';
+import { ProjectEvent } from '../graphql';
 
 @Injectable()
 export class UserService {
@@ -36,6 +39,7 @@ export class UserService {
     return await newUser.save();
   }
 
+  @OnEvent(OrganizationEvent.OrganizationCreated)
   async updateOrganization({
     organizationId,
     userId,
@@ -52,6 +56,7 @@ export class UserService {
     return organizationId;
   }
 
+  @OnEvent(ProjectEvent.ProjectCreated)
   async updateProject({ projectId, userId }: UpdateUserProjectInput) {
     const userProject = (await UserModel.findById(userId))?.projects;
 

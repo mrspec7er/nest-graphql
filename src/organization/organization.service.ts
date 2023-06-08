@@ -1,12 +1,13 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Organization } from './organization.model';
 import { Organization as OrganizationType } from '../graphql';
-import { UserService } from '../user/user.service';
+import { OrganizationEvent } from '../graphql';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { ProjectEvent } from '../graphql';
 
 @Injectable()
 export class OrganizationService {
-  @Inject(UserService)
-  private readonly userService: UserService;
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
   async getAll(): Promise<OrganizationType[]> {
     return await Organization.find();
@@ -19,18 +20,17 @@ export class OrganizationService {
     name: string;
     userId: string;
   }): Promise<OrganizationType> {
+    const projectOwner = {
+      id: userId,
+      role: 'OWNER',
+      invitedAt: new Date().toTimeString(),
+    };
     const organization = await new Organization({
       name,
-      users: [
-        {
-          id: userId,
-          role: 'OWNER',
-          invitedAt: new Date().toTimeString(),
-        },
-      ],
+      users: [projectOwner],
     }).save();
 
-    this.userService.updateOrganization({
+    this.eventEmitter.emit(OrganizationEvent.OrganizationCreated, {
       organizationId: organization.id,
       userId,
     });
@@ -78,6 +78,7 @@ export class OrganizationService {
   //   return id;
   // }
 
+  @OnEvent(ProjectEvent.ProjectCreated)
   async updateProject({
     organizationId,
     projectId,

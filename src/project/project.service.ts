@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Project } from './project.model';
 import { Project as ProjectType } from '../graphql';
-import { UserService } from '../user/user.service';
-import { OrganizationService } from '../organization/organization.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ProjectEvent } from '../graphql';
 
 interface UpdateProjectInputType {
   name: string;
@@ -20,11 +20,7 @@ interface CreateProjectType {
 
 @Injectable()
 export class ProjectService {
-  constructor(
-    @Inject(UserService) private readonly userService: UserService,
-    @Inject(OrganizationService)
-    private readonly organizationService: OrganizationService,
-  ) {}
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
   async getAll(): Promise<ProjectType[]> {
     return await Project.find();
@@ -60,11 +56,11 @@ export class ProjectService {
       ],
     }).save();
 
-    await this.organizationService.updateProject({
+    this.eventEmitter.emit(ProjectEvent.ProjectCreated, {
       projectId: project.id,
-      organizationId,
+      organizationId: organizationId,
+      userId,
     });
-    await this.userService.updateProject({ projectId: project.id, userId });
 
     return project;
   }

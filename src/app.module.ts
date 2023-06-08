@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { OrganizationModule } from './organization/organization.module';
 import { ProjectModule } from './project/project.module';
 import { VendorModule } from './vendor/vendor.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { VendorModule } from './vendor/vendor.module';
       },
       playground: true,
     }),
+    EventEmitterModule.forRoot(),
     UserModule,
     OrganizationModule,
     ProjectModule,

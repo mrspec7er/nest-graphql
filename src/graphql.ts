@@ -8,6 +8,18 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum OrganizationEvent {
+    OrganizationCreated = "OrganizationCreated",
+    OrganizationDeleted = "OrganizationDeleted",
+    OrganizationMemberUpdated = "OrganizationMemberUpdated"
+}
+
+export enum ProjectEvent {
+    ProjectCreated = "ProjectCreated",
+    ProjectDeleted = "ProjectDeleted",
+    ProjectMemberUpdated = "ProjectMemberUpdated"
+}
+
 export enum VendorEntities {
     VendorVenue = "VendorVenue",
     VendorEquipment = "VendorEquipment",
@@ -130,13 +142,11 @@ export abstract class IQuery {
 
     abstract myOrganization(): Organization[] | Promise<Organization[]>;
 
-    abstract project(): Project[] | Promise<Project[]>;
-
     abstract myProject(): Project[] | Promise<Project[]>;
 
     abstract projectById(id: string): Project | Promise<Project>;
 
-    abstract projectByOrganization(organizationId: string): Project[] | Promise<Project[]>;
+    abstract projects(organizationId: string): Project[] | Promise<Project[]>;
 
     abstract users(): User[] | Promise<User[]>;
 

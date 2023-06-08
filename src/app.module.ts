@@ -8,6 +8,7 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { OrganizationModule } from './organization/organization.module';
 import { ProjectModule } from './project/project.module';
+import { VendorModule } from './vendor/vendor.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ProjectModule } from './project/project.module';
     UserModule,
     OrganizationModule,
     ProjectModule,
+    VendorModule,
     AuthModule,
   ],
   controllers: [AppController],

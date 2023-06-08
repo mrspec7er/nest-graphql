@@ -1,0 +1,82 @@
+type Query {
+  venues: [VendorVenue!]!
+  foods: [VendorFood!]!
+  equipments: [VendorEquipment!]!
+  vendors: [Vendor!]!
+}
+
+type Mutation {
+  createVenue(createVenueInput: CreateVenueInput!): VendorVenue!
+  createFood(createFoodInput: CreateFoodInput!): VendorFood!
+  createEquipment(createEquipmentInput: CreateEquipmentInput!): VendorEquipment!
+}
+
+input CreateVenueInput {
+  name: String!
+  address: String!
+  phone: String!
+  isActive: Boolean!
+  venueAddress: String!
+  venuePhone: String!
+  venueCoordinator: String!
+}
+
+input CreateEquipmentInput {
+  name: String!
+  address: String!
+  phone: String!
+  isActive: Boolean!
+  equipments: [String!]
+}
+input CreateFoodInput {
+  name: String!
+  address: String!
+  phone: String!
+  isActive: Boolean!
+  menu: [String!]
+}
+
+type VendorVenue {
+  id: String
+  name: String!
+  address: String
+  phone: String!
+  isActive: Boolean!
+  venueAddress: String!
+  venuePhone: String!
+  venueCoordinator: String!
+  createdAt: Date
+  updatedAt: Date
+}
+
+type VendorEquipment {
+  id: String
+  name: String!
+  address: String
+  phone: String!
+  isActive: Boolean!
+  equipments: [String!]
+  createdAt: Date
+  updatedAt: Date
+}
+
+type VendorFood {
+  id: String
+  name: String!
+  address: String
+  phone: String!
+  isActive: Boolean!
+  menu: [String!]
+  createdAt: Date
+  updatedAt: Date
+}
+
+enum VendorEntities {
+  VendorVenue
+  VendorEquipment
+  VendorFood
+}
+
+union Vendor = VendorEquipment | VendorFood | VendorVenue
+
+scalar Date

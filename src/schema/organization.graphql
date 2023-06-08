@@ -34,8 +34,8 @@ type Organization {
   name: String!
   users: [OrganizationMember]
   projects: [String!]
-  created: String!
-  updated: String!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type OrganizationMember {
@@ -43,3 +43,5 @@ type OrganizationMember {
   invitedAt: String
   role: String
 }
+
+scalar Date

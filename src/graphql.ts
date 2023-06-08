@@ -8,6 +8,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum VendorEntities {
+    VendorVenue = "VendorVenue",
+    VendorEquipment = "VendorEquipment",
+    VendorFood = "VendorFood"
+}
+
 export class LoginInput {
     email: string;
     password: string;
@@ -67,6 +73,32 @@ export class UpdateUserInput {
     password: string;
 }
 
+export class CreateVenueInput {
+    name: string;
+    address: string;
+    phone: string;
+    isActive: boolean;
+    venueAddress: string;
+    venuePhone: string;
+    venueCoordinator: string;
+}
+
+export class CreateEquipmentInput {
+    name: string;
+    address: string;
+    phone: string;
+    isActive: boolean;
+    equipments?: Nullable<string[]>;
+}
+
+export class CreateFoodInput {
+    name: string;
+    address: string;
+    phone: string;
+    isActive: boolean;
+    menu?: Nullable<string[]>;
+}
+
 export abstract class IMutation {
     abstract login(loginInput: LoginInput): Token | Promise<Token>;
 
@@ -81,6 +113,12 @@ export abstract class IMutation {
     abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
     abstract updateUser(updateUserInput: UpdateUserInput): Message | Promise<Message>;
+
+    abstract createVenue(createVenueInput: CreateVenueInput): VendorVenue | Promise<VendorVenue>;
+
+    abstract createFood(createFoodInput: CreateFoodInput): VendorFood | Promise<VendorFood>;
+
+    abstract createEquipment(createEquipmentInput: CreateEquipmentInput): VendorEquipment | Promise<VendorEquipment>;
 }
 
 export class Token {
@@ -103,6 +141,14 @@ export abstract class IQuery {
     abstract users(): User[] | Promise<User[]>;
 
     abstract getProfileUser(): User | Promise<User>;
+
+    abstract venues(): VendorVenue[] | Promise<VendorVenue[]>;
+
+    abstract foods(): VendorFood[] | Promise<VendorFood[]>;
+
+    abstract equipments(): VendorEquipment[] | Promise<VendorEquipment[]>;
+
+    abstract vendors(): Vendor[] | Promise<Vendor[]>;
 }
 
 export class Organization {
@@ -110,8 +156,8 @@ export class Organization {
     name: string;
     users?: Nullable<Nullable<OrganizationMember>[]>;
     projects?: Nullable<string[]>;
-    created: string;
-    updated: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export class OrganizationMember {
@@ -151,4 +197,40 @@ export class Message {
     message: string;
 }
 
+export class VendorVenue {
+    id?: Nullable<string>;
+    name: string;
+    address?: Nullable<string>;
+    phone: string;
+    isActive: boolean;
+    venueAddress: string;
+    venuePhone: string;
+    venueCoordinator: string;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+}
+
+export class VendorEquipment {
+    id?: Nullable<string>;
+    name: string;
+    address?: Nullable<string>;
+    phone: string;
+    isActive: boolean;
+    equipments?: Nullable<string[]>;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+}
+
+export class VendorFood {
+    id?: Nullable<string>;
+    name: string;
+    address?: Nullable<string>;
+    phone: string;
+    isActive: boolean;
+    menu?: Nullable<string[]>;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+}
+
+export type Vendor = VendorEquipment | VendorFood | VendorVenue;
 type Nullable<T> = T | null;

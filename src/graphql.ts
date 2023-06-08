@@ -206,6 +206,8 @@ export class VendorVenue {
     venueAddress: string;
     venuePhone: string;
     venueCoordinator: string;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
 }
 
 export class VendorEquipment {
@@ -215,6 +217,8 @@ export class VendorEquipment {
     phone: string;
     isActive: boolean;
     equipments?: Nullable<string[]>;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
 }
 
 export class VendorFood {
@@ -224,6 +228,8 @@ export class VendorFood {
     phone: string;
     isActive: boolean;
     menu?: Nullable<string[]>;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
 }
 
 export type Vendor = VendorEquipment | VendorFood | VendorVenue;

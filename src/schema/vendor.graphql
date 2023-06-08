@@ -45,6 +45,8 @@ type VendorVenue {
   venueAddress: String!
   venuePhone: String!
   venueCoordinator: String!
+  createdAt: Date
+  updatedAt: Date
 }
 
 type VendorEquipment {
@@ -54,6 +56,8 @@ type VendorEquipment {
   phone: String!
   isActive: Boolean!
   equipments: [String!]
+  createdAt: Date
+  updatedAt: Date
 }
 
 type VendorFood {
@@ -63,6 +67,8 @@ type VendorFood {
   phone: String!
   isActive: Boolean!
   menu: [String!]
+  createdAt: Date
+  updatedAt: Date
 }
 
 enum VendorEntities {
@@ -72,3 +78,5 @@ enum VendorEntities {
 }
 
 union Vendor = VendorEquipment | VendorFood | VendorVenue
+
+scalar Date

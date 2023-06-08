@@ -1,23 +1,26 @@
 import mongoose from 'mongoose';
 
-const VendorSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const VendorSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  address: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-});
+  { timestamps: true },
+);
 
 const VenueSchema = new mongoose.Schema({
   venueAddress: {

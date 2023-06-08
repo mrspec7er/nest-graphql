@@ -47,7 +47,7 @@ export class OrganizationService {
   }): Promise<OrganizationType> {
     const organization = await Organization.findOneAndUpdate(
       { _id: id },
-      { name, updatedAt: new Date().toTimeString() },
+      { name },
     );
 
     return organization;

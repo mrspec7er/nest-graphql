@@ -29,6 +29,12 @@ input UpdateOrganizationInput {
   id: String!
 }
 
+enum OrganizationEvent {
+  OrganizationCreated
+  OrganizationDeleted
+  OrganizationMemberUpdated
+}
+
 type Organization {
   id: String
   name: String!
